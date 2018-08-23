@@ -1,0 +1,12 @@
+{
+    "name": "ginero/ginero-php",
+    "type": "library",
+    "license": "MIT",
+    "require": {},
+    ,
+    "autoload": {
+        "psr-4": {
+            "Ginero\\GineroPhp\\": "src/"
+        }
+    }
+}
