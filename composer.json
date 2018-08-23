@@ -2,8 +2,9 @@
     "name": "ginero/ginero-php",
     "type": "library",
     "license": "MIT",
-    "require": {},
-    ,
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    },
     "autoload": {
         "psr-4": {
             "Ginero\\GineroPhp\\": "src/"
