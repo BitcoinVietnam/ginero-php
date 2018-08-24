@@ -18,10 +18,32 @@ class Factory
      * @param string|null $apiKey
      * @param string|null $apiSecret
      * @param string|null $apiBaseUri
+     * @return Deposit
+     */
+    public function deposit($apiKey = null, $apiSecret = null, $apiBaseUri = null)
+    {
+        return new Deposit($apiKey, $apiSecret, $apiBaseUri);
+    }
+
+    /**
+     * @param string|null $apiKey
+     * @param string|null $apiSecret
+     * @param string|null $apiBaseUri
      * @return Market
      */
     public function market($apiKey = null, $apiSecret = null, $apiBaseUri = null)
     {
         return new Market($apiKey, $apiSecret, $apiBaseUri);
+    }
+
+    /**
+     * @param string|null $apiKey
+     * @param string|null $apiSecret
+     * @param string|null $apiBaseUri
+     * @return Withdrawal
+     */
+    public function withdrawal($apiKey = null, $apiSecret = null, $apiBaseUri = null)
+    {
+        return new Withdrawal($apiKey, $apiSecret, $apiBaseUri);
     }
 }

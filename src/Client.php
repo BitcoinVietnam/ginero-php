@@ -8,9 +8,14 @@
 
 namespace Ginero\GineroPhp;
 
+use Doctrine\Common\Annotations\AnnotationRegistry;
+use Ginero\GineroPhp\Model\Response\BaseResponse;
+use Ginero\GineroPhp\Model\Response\CollectionResponse;
 use Ginero\GineroPhp\Section\Factory;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Exception\BadResponseException;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializerInterface;
 
 /**
  * Class Client
@@ -23,22 +28,27 @@ class Client
     /**
      * @var string
      */
-    private $apiKey;
+    protected $apiKey;
 
     /**
      * @var string
      */
-    private $apiSecret;
+    protected $apiSecret;
 
     /**
      * @var string
      */
-    private $apiBaseUri;
+    protected $apiBaseUri;
 
     /**
      * @var ClientInterface
      */
     private $guzzle;
+
+    /**
+     * @var SerializerInterface
+     */
+    private $serializer;
 
     /**
      * @var Factory
@@ -55,9 +65,19 @@ class Client
     {
         $this->apiKey = $apiKey;
         $this->apiSecret = $apiSecret;
-        $this->apiBaseUri = null !== $apiBaseUri ? $this->apiBaseUri : static::API_URL;
+        $this->apiBaseUri = null !== $apiBaseUri ? $apiBaseUri : static::API_URL;
         $this->guzzle = new \GuzzleHttp\Client(['base_url' => $this->apiBaseUri]);
+        AnnotationRegistry::registerLoader('class_exists');
+        $this->serializer = SerializerBuilder::create()->build();
         $this->section = new Factory();
+    }
+
+    /**
+     * @return Section\Deposit
+     */
+    public function deposit()
+    {
+        return $this->section->deposit($this->apiKey, $this->apiSecret, $this->apiBaseUri);
     }
 
     /**
@@ -69,28 +89,101 @@ class Client
     }
 
     /**
+     * @return Section\Withdrawal
+     */
+    public function withdrawal()
+    {
+        return $this->section->withdrawal($this->apiKey, $this->apiSecret, $this->apiBaseUri);
+    }
+
+    /**
      * @param string $url
-     * @return \Psr\Http\Message\ResponseInterface
+     * @param string|null $className
+     * @return mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function get($url)
+    protected function get($url, $className = null)
     {
-        return $this->request('GET', $url);
+        return $this->request('GET', $url, [], $className);
+    }
+
+    /**
+     * @param string $url
+     * @param string $body
+     * @param null $className
+     * @return mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function post($url, $body, $className = null)
+    {
+        return $this->request('POST', $url, ['body' => $body], $className);
     }
 
     /**
      * @param $method
      * @param $url
      * @param array $options
-     * @return mixed|\Psr\Http\Message\ResponseInterface
+     * @param string|null $className
+     * @return BaseResponse|mixed
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    protected function request($method, $url, array $options = [])
+    private function request($method, $url, array $options = [], $className = null)
     {
-        $response = $this->guzzle->request($method, $url, $options);
+        $options['headers']['Accept'] = 'application/json';
+        if ($this->apiKey && $this->apiSecret) {
+            $options['headers']['apikey'] = $this->apiKey;
+            $options['headers']['nonce'] = $nonce = (int) microtime(true);
+            $options['headers']['signature'] = $this->sign($nonce . $this->apiKey);
+        }
 
-        // todo: catch exceptions, process response
+        try {
+            $response = $this->guzzle->request($method, $url, $options);
+            $data = $response->getBody()->getContents();
+        } catch (BadResponseException $exception) {
+            $response = $exception->getResponse();
+            $data = $response->getBody()->getContents();
+        }
 
-        return $response;
+        $processedResponse = $data;
+        if (null !== $className) {
+            /** @var BaseResponse|object $response */
+            $processedResponse = $this->deserialize($data, $className);
+            if (is_array($processedResponse)) {
+                $processedResponse = (new CollectionResponse())->setCollection($processedResponse);
+            }
+            if ($processedResponse instanceof BaseResponse) {
+                $processedResponse->setResponse($response);
+            }
+        }
+
+        return $processedResponse;
+    }
+
+    /**
+     * @param string $message
+     * @return string
+     */
+    private function sign($message)
+    {
+        return hash_hmac('sha256', $message, $this->apiSecret);
+    }
+
+    /**
+     * @param mixed $data
+     * @return string
+     */
+    protected function serialize($data)
+    {
+        return $this->serializer->serialize($data, 'json');
+    }
+
+    /**
+     * @param string $data
+     * @param string $className
+     * @return object
+     */
+    private function deserialize($data, $className)
+    {
+        return $this->serializer->deserialize($data, $className, 'json');
     }
 }
