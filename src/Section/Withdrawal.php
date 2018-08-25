@@ -43,16 +43,18 @@ final class Withdrawal extends Client
      * @param string $cryptoCurrency
      * @param int $amount
      * @param string $destination
+     * @param string|null $comment
      * @return \Ginero\GineroPhp\Model\Response\Withdrawal\CreateWithdrawal
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function createWithdrawal($cryptoCurrency, $amount, $destination)
+    public function createWithdrawal($cryptoCurrency, $amount, $destination, $comment = null)
     {
         $body = $this->serialize(
             (new CreateWithdrawal())
                 ->setCryptoCurrency($cryptoCurrency)
                 ->setAmount($amount)
                 ->setDestination($destination)
+                ->setComment($comment)
         );
 
         return $this->post($this->apiBaseUri . "/", $body, \Ginero\GineroPhp\Model\Response\Withdrawal\CreateWithdrawal::class);

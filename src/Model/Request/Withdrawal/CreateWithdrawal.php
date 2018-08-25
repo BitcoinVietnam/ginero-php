@@ -41,6 +41,14 @@ class CreateWithdrawal
     private $destination;
 
     /**
+     * @var string
+     *
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("comment")
+     */
+    private $comment;
+
+    /**
      * @return string
      */
     public function getCryptoCurrency()
@@ -91,6 +99,24 @@ class CreateWithdrawal
     public function setDestination($destination)
     {
         $this->destination = $destination;
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getComment()
+    {
+        return $this->comment;
+    }
+
+    /**
+     * @param string $comment
+     * @return CreateWithdrawal
+     */
+    public function setComment($comment)
+    {
+        $this->comment = $comment;
         return $this;
     }
 }
