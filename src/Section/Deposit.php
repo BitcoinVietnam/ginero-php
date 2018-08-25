@@ -40,6 +40,17 @@ final class Deposit extends Client
 
     /**
      * @param string $cryptoCurrency
+     * @param string $address
+     * @return GetDeposit
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getDepositByCryptoCurrencyAndAddress($cryptoCurrency, $address)
+    {
+        return $this->get($this->apiBaseUri . "/byCurrencyAndAddress/$cryptoCurrency/$address", GetDeposit::class);
+    }
+
+    /**
+     * @param string $cryptoCurrency
      * @return GetDeposit
      * @throws \GuzzleHttp\Exception\GuzzleException
      */

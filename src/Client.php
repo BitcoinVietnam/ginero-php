@@ -14,6 +14,8 @@ use Ginero\GineroPhp\Model\Response\CollectionResponse;
 use Ginero\GineroPhp\Section\Factory;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException;
+use GuzzleHttp\Exception\ClientException;
+use JMS\Serializer\Exception\RuntimeException;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 
@@ -139,9 +141,9 @@ class Client
         try {
             $response = $this->guzzle->request($method, $url, $options);
             $data = $response->getBody()->getContents();
-        } catch (BadResponseException $exception) {
+        } catch (ClientException $exception) {
             $response = $exception->getResponse();
-            $data = $response->getBody()->getContents();
+            $data = json_encode(['error' => ['code' => $response->getStatusCode(), 'message' => $response->getReasonPhrase()]]);
         }
 
         $processedResponse = $data;
