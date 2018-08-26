@@ -113,4 +113,14 @@ abstract class BaseResponse
         $this->response = $response;
         return $this;
     }
+
+    /* HELPERS */
+
+    /**
+     * @return bool
+     */
+    public function isOk()
+    {
+        return null === $this->error && null === $this->errors && 2 == substr($this->code, 0, 1);
+    }
 }
