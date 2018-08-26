@@ -18,6 +18,22 @@ use Psr\Http\Message\ResponseInterface;
 abstract class BaseResponse
 {
     /**
+     * @var string
+     *
+     * @Serializer\Type("string")
+     * @Serializer\SerializedName("message")
+     */
+    private $message;
+
+    /**
+     * @var int
+     *
+     * @Serializer\Type("integer")
+     * @Serializer\SerializedName("code")
+     */
+    private $code = 200;
+
+    /**
      * @var Error
      *
      * @Serializer\Type("Ginero\GineroPhp\Model\Response\Error")
@@ -26,9 +42,33 @@ abstract class BaseResponse
     private $error;
 
     /**
+     * @var Errors
+     *
+     * @Serializer\Type("Ginero\GineroPhp\Model\Response\Errors")
+     * @Serializer\SerializedName("errors")
+     */
+    private $errors;
+
+    /**
      * @var ResponseInterface
      */
     private $response;
+
+    /**
+     * @return string
+     */
+    public function getMessage()
+    {
+        return $this->message;
+    }
+
+    /**
+     * @return int
+     */
+    public function getCode()
+    {
+        return $this->code;
+    }
 
     /**
      * @return Error
@@ -39,11 +79,29 @@ abstract class BaseResponse
     }
 
     /**
+     * @return Errors
+     */
+    public function getErrors()
+    {
+        return $this->errors;
+    }
+
+    /**
      * @return ResponseInterface
      */
     public function getResponse()
     {
         return $this->response;
+    }
+
+    /**
+     * @param int $code
+     * @return BaseResponse
+     */
+    public function setCode($code)
+    {
+        $this->code = $code;
+        return $this;
     }
 
     /**

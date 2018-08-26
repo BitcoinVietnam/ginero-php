@@ -134,19 +134,20 @@ class Client
         $options['headers']['Accept'] = 'application/json';
         if ($this->apiKey && $this->apiSecret) {
             $options['headers']['apikey'] = $this->apiKey;
-            $options['headers']['nonce'] = $nonce = (int) microtime(true);
+            $options['headers']['nonce'] = $nonce = number_format(round(microtime(true) * 100000000), 0, '.', '');
             $options['headers']['signature'] = $this->sign($nonce . $this->apiKey);
         }
 
         try {
             $response = $this->guzzle->request($method, $url, $options);
             $data = $response->getBody()->getContents();
-        } catch (ClientException $exception) {
+        } catch (BadResponseException $exception) {
             $response = $exception->getResponse();
-            $data = json_encode(['error' => ['code' => $response->getStatusCode(), 'message' => $response->getReasonPhrase()]]);
+            $data = $response->getBody()->getContents();
         }
 
         $processedResponse = $data;
+
         if (null !== $className) {
             /** @var BaseResponse|object $response */
             $processedResponse = $this->deserialize($data, $className);
@@ -155,6 +156,9 @@ class Client
             }
             if ($processedResponse instanceof BaseResponse) {
                 $processedResponse->setResponse($response);
+                if (null === $processedResponse->getCode()) {
+                    $processedResponse->setCode($response->getCode());
+                }
             }
         }
 
