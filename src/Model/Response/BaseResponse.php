@@ -123,4 +123,26 @@ abstract class BaseResponse
     {
         return null === $this->error && null === $this->errors && 2 == substr($this->code, 0, 1);
     }
+
+    /**
+     * @return string|null
+     */
+    public function getFirstError()
+    {
+        if (null !== $this->error) {
+            return $this->error;
+        }
+
+        if ($this->errors instanceof Errors) {
+            foreach ($this->errors->getChildren() as $child) {
+                if (count($child->getErrors()) > 0) {
+                    foreach ($child->getErrors() as $error) {
+                        return $error;
+                    }
+                }
+            }
+        }
+
+        return null;
+    }
 }
