@@ -40,6 +40,17 @@ class Factory
      * @param string|null $apiKey
      * @param string|null $apiSecret
      * @param string|null $apiBaseUri
+     * @return Order
+     */
+    public function order($apiKey = null, $apiSecret = null, $apiBaseUri = null)
+    {
+        return new Order($apiKey, $apiSecret, $apiBaseUri);
+    }
+
+    /**
+     * @param string|null $apiKey
+     * @param string|null $apiSecret
+     * @param string|null $apiBaseUri
      * @return Withdrawal
      */
     public function withdrawal($apiKey = null, $apiSecret = null, $apiBaseUri = null)

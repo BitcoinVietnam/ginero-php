@@ -14,8 +14,6 @@ use Ginero\GineroPhp\Model\Response\CollectionResponse;
 use Ginero\GineroPhp\Section\Factory;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\BadResponseException;
-use GuzzleHttp\Exception\ClientException;
-use JMS\Serializer\Exception\RuntimeException;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 
@@ -88,6 +86,14 @@ class Client
     public function market()
     {
         return $this->section->market($this->apiKey, $this->apiSecret, $this->apiBaseUri);
+    }
+
+    /**
+     * @return Section\Order
+     */
+    public function order()
+    {
+        return $this->section->order($this->apiKey, $this->apiSecret, $this->apiBaseUri);
     }
 
     /**
