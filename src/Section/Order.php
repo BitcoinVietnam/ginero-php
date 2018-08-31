@@ -39,7 +39,7 @@ final class Order extends Client
      * @param null $priceAutoUpdate
      * @param null $premium
      * @param null $autoCancelTime
-     * @return CreateOrder
+     * @return \Ginero\GineroPhp\Model\Response\Order\CreateOrder
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function createOrder(
