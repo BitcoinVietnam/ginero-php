@@ -23,7 +23,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("string")
      * @Serializer\SerializedName("id")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -31,7 +31,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("string")
      * @Serializer\SerializedName("pair")
      */
-    private $pair;
+    protected $pair;
 
     /**
      * @var int
@@ -39,7 +39,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("amount")
      */
-    private $amount = 0;
+    protected $amount = 0;
 
     /**
      * @var int
@@ -47,7 +47,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("price")
      */
-    private $price = 0;
+    protected $price = 0;
 
     /**
      * @var float
@@ -55,7 +55,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("float")
      * @Serializer\SerializedName("buyer_fee")
      */
-    private $buyerFee = 0.0;
+    protected $buyerFee = 0.0;
 
     /**
      * @var float
@@ -63,7 +63,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("float")
      * @Serializer\SerializedName("seller_fee")
      */
-    private $sellerFee = 0.0;
+    protected $sellerFee = 0.0;
 
     /**
      * @var int
@@ -71,7 +71,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("net_crypto_amount")
      */
-    private $netCryptoAmount = 0;
+    protected $netCryptoAmount = 0;
 
     /**
      * @var int
@@ -79,7 +79,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("net_fiat_amount")
      */
-    private $netFiatAmount = 0;
+    protected $netFiatAmount = 0;
 
     /**
      * @var int
@@ -87,7 +87,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("volume")
      */
-    private $volume = 0;
+    protected $volume = 0;
 
     /**
      * @var int
@@ -95,7 +95,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("integer")
      * @Serializer\SerializedName("volume_usd")
      */
-    private $volumeUsd = 0;
+    protected $volumeUsd = 0;
 
     /**
      * @var bool
@@ -103,7 +103,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("boolean")
      * @Serializer\SerializedName("marked_as_paid")
      */
-    private $markedAsPaid = false;
+    protected $markedAsPaid = false;
 
     /**
      * @var \DateTime
@@ -111,7 +111,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("DateTime")
      * @Serializer\SerializedName("marked_as_paid_at")
      */
-    private $markedAsPaidAt;
+    protected $markedAsPaidAt;
 
     /**
      * @var bool
@@ -119,7 +119,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("boolean")
      * @Serializer\SerializedName("payment_confirmed")
      */
-    private $paymentConfirmed = false;
+    protected $paymentConfirmed = false;
 
     /**
      * @var \DateTime
@@ -127,7 +127,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("DateTime")
      * @Serializer\SerializedName("payment_confirmed_at")
      */
-    private $paymentConfirmedAt;
+    protected $paymentConfirmedAt;
 
     /**
      * @var bool
@@ -135,7 +135,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("boolean")
      * @Serializer\SerializedName("cancelled")
      */
-    private $cancelled = false;
+    protected $cancelled = false;
 
     /**
      * @var \DateTime
@@ -143,7 +143,7 @@ class CreateTrade extends BaseResponse
      * @Serializer\Type("DateTime")
      * @Serializer\SerializedName("created_at")
      */
-    private $createdAt;
+    protected $createdAt;
 
     /**
      * @return string

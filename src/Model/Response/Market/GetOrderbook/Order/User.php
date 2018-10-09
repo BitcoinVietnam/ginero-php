@@ -19,7 +19,7 @@ class User
      * @Serializer\Type("string")
      * @Serializer\SerializedName("id")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
@@ -27,7 +27,7 @@ class User
      * @Serializer\Type("string")
      * @Serializer\SerializedName("username")
      */
-    private $username;
+    protected $username;
 
     /**
      * @var bool
@@ -35,7 +35,7 @@ class User
      * @Serializer\Type("boolean")
      * @Serializer\SerializedName("identity_verified")
      */
-    private $identityVerified = false;
+    protected $identityVerified = false;
 
     /**
      * @return string
