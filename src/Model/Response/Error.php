@@ -47,4 +47,12 @@ class Error
     {
         return $this->message;
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string) $this->message;
+    }
 }
