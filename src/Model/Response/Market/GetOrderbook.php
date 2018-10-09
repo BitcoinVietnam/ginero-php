@@ -24,7 +24,7 @@ final class GetOrderbook extends BaseResponse
      * @Serializer\Type("array<Ginero\GineroPhp\Model\Response\Market\GetOrderbook\Order>")
      * @Serializer\SerializedName("buy")
      */
-    private $buyOrders;
+    private $buyOrders = [];
 
     /**
      * @var Order[]
@@ -32,7 +32,7 @@ final class GetOrderbook extends BaseResponse
      * @Serializer\Type("array<Ginero\GineroPhp\Model\Response\Market\GetOrderbook\Order>")
      * @Serializer\SerializedName("sell")
      */
-    private $sellOrders;
+    private $sellOrders = [];
 
     /**
      * @return Order[]
