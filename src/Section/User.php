@@ -11,6 +11,7 @@ namespace Ginero\GineroPhp\Section;
 use Ginero\GineroPhp\Client;
 use Ginero\GineroPhp\Model\Response\CollectionResponse;
 use Ginero\GineroPhp\Model\Response\User\GetBalance;
+use Ginero\GineroPhp\Model\Response\User\GetTrades;
 
 /**
  * Class User
@@ -36,5 +37,15 @@ final class User extends Client
     public function getBalance()
     {
         return $this->get($this->apiBaseUri . "/balance", 'array<string, ' . GetBalance\Balance::class . '>');
+    }
+
+    /**
+     * @param string $cryptoCurrency
+     * @return CollectionResponse
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function getTrades($cryptoCurrency)
+    {
+        return $this->get($this->apiBaseUri . "/trades?cryptoCurrency=$cryptoCurrency", 'array<' . GetTrades\Trade::class . '>');
     }
 }

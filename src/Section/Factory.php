@@ -51,6 +51,17 @@ class Factory
      * @param string|null $apiKey
      * @param string|null $apiSecret
      * @param string|null $apiBaseUri
+     * @return Trade
+     */
+    public function trade($apiKey = null, $apiSecret = null, $apiBaseUri = null)
+    {
+        return new Trade($apiKey, $apiSecret, $apiBaseUri);
+    }
+
+    /**
+     * @param string|null $apiKey
+     * @param string|null $apiSecret
+     * @param string|null $apiBaseUri
      * @return User
      */
     public function user($apiKey = null, $apiSecret = null, $apiBaseUri = null)

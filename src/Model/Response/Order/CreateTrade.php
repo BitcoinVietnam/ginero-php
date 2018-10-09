@@ -15,7 +15,7 @@ use JMS\Serializer\Annotation as Serializer;
  * Class CreateTrade
  * @package Ginero\GineroPhp\Model\Response\Order
  */
-final class CreateTrade extends BaseResponse
+class CreateTrade extends BaseResponse
 {
     /**
      * @var string

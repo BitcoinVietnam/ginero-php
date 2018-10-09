@@ -97,6 +97,13 @@ class Client
     }
 
     /**
+     * @return Section\Trade
+     */
+    public function trade()
+    {
+        return $this->section->trade($this->apiKey, $this->apiSecret, $this->apiBaseUri);
+    }
+    /**
      * @return Section\User
      */
     public function user()
@@ -133,6 +140,18 @@ class Client
     protected function post($url, $body, $className = null)
     {
         return $this->request('POST', $url, ['body' => $body], $className);
+    }
+
+    /**
+     * @param string $url
+     * @param string|null $body
+     * @param string|null $className
+     * @return BaseResponse|mixed
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    protected function patch($url, $body = null, $className = null)
+    {
+        return $this->request('PATCH', $url, ['body' => $body], $className);
     }
 
     /**
