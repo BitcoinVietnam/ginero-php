@@ -20,12 +20,38 @@ final class CollectionResponse extends BaseResponse
     protected $collection = [];
 
     /**
+     * @return array
+     */
+    public function getCollection()
+    {
+        return $this->collection;
+    }
+
+    /**
      * @param array $collection
      * @return CollectionResponse
      */
-    public function setCollection(array $collection)
+    public function setCollection($collection)
     {
         $this->collection = $collection;
         return $this;
+    }
+
+    /**
+     * @param string $key
+     * @return bool
+     */
+    public function has($key)
+    {
+        return isset($this->collection[$key]);
+    }
+
+    /**
+     * @param string $key
+     * @return mixed
+     */
+    public function get($key)
+    {
+        return $this->collection[$key];
     }
 }

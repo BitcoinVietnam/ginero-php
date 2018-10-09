@@ -97,6 +97,14 @@ class Client
     }
 
     /**
+     * @return Section\User
+     */
+    public function user()
+    {
+        return $this->section->user($this->apiKey, $this->apiSecret, $this->apiBaseUri);
+    }
+
+    /**
      * @return Section\Withdrawal
      */
     public function withdrawal()
@@ -157,6 +165,7 @@ class Client
         if (null !== $className) {
             /** @var BaseResponse|object $response */
             $processedResponse = $this->deserialize($data, $className);
+
             if (is_array($processedResponse)) {
                 $processedResponse = (new CollectionResponse())->setCollection($processedResponse);
             }

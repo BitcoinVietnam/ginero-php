@@ -51,6 +51,17 @@ class Factory
      * @param string|null $apiKey
      * @param string|null $apiSecret
      * @param string|null $apiBaseUri
+     * @return User
+     */
+    public function user($apiKey = null, $apiSecret = null, $apiBaseUri = null)
+    {
+        return new User($apiKey, $apiSecret, $apiBaseUri);
+    }
+
+    /**
+     * @param string|null $apiKey
+     * @param string|null $apiSecret
+     * @param string|null $apiBaseUri
      * @return Withdrawal
      */
     public function withdrawal($apiKey = null, $apiSecret = null, $apiBaseUri = null)
