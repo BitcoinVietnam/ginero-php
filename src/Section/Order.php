@@ -10,6 +10,8 @@ namespace Ginero\GineroPhp\Section;
 
 use Ginero\GineroPhp\Client;
 use Ginero\GineroPhp\Model\Request\Order\CreateOrder;
+use Ginero\GineroPhp\Model\Request\Order\CreateTrade;
+use Ginero\GineroPhp\Model\Response\Market\GetTrades\Trade;
 
 /**
  * Class Order
@@ -29,16 +31,16 @@ final class Order extends Client
     }
 
     /**
-     * @param $type
-     * @param $cryptoCurrency
-     * @param $fiatCurrency
-     * @param $amount
-     * @param $price
-     * @param null $minAmount
-     * @param null $limitPrice
-     * @param null $priceAutoUpdate
-     * @param null $premium
-     * @param null $autoCancelTime
+     * @param string $type
+     * @param string $cryptoCurrency
+     * @param string $fiatCurrency
+     * @param int $amount
+     * @param int|null $price
+     * @param int|null $minAmount
+     * @param int|null $limitPrice
+     * @param bool|null $priceAutoUpdate
+     * @param float|null $premium
+     * @param \DateTime|null $autoCancelTime
      * @return \Ginero\GineroPhp\Model\Response\Order\CreateOrder
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
@@ -69,5 +71,18 @@ final class Order extends Client
         );
 
         return $this->post($this->apiBaseUri . "/", $body, \Ginero\GineroPhp\Model\Response\Order\CreateOrder::class);
+    }
+
+    /**
+     * @param string $orderId
+     * @param int $amount
+     * @return Trade
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function createTrade($orderId, $amount)
+    {
+        $body = $this->serialize((new CreateTrade())->setAmount($amount));
+
+        return $this->post($this->apiBaseUri . "/$orderId/trades", $body, Trade::class);
     }
 }

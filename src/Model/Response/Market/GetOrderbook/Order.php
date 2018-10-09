@@ -8,6 +8,7 @@
 
 namespace Ginero\GineroPhp\Model\Response\Market\GetOrderbook;
 
+use Ginero\GineroPhp\Model\Response\Market\GetOrderbook\Order\User;
 use JMS\Serializer\Annotation as Serializer;
 
 /**
@@ -57,6 +58,14 @@ class Order
     private $price;
 
     /**
+     * @var User
+     *
+     * @Serializer\Type("Ginero\GineroPhp\Model\Response\Market\GetOrderbook\Order\User")
+     * @Serializer\SerializedName("user")
+     */
+    private $user;
+
+    /**
      * @return string
      */
     public function getId()
@@ -94,5 +103,13 @@ class Order
     public function getPrice()
     {
         return $this->price;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser()
+    {
+        return $this->user;
     }
 }
