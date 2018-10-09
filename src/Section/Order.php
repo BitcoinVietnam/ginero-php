@@ -11,7 +11,6 @@ namespace Ginero\GineroPhp\Section;
 use Ginero\GineroPhp\Client;
 use Ginero\GineroPhp\Model\Request\Order\CreateOrder;
 use Ginero\GineroPhp\Model\Request\Order\CreateTrade;
-use Ginero\GineroPhp\Model\Response\Market\GetTrades\Trade;
 
 /**
  * Class Order
@@ -76,13 +75,13 @@ final class Order extends Client
     /**
      * @param string $orderId
      * @param int $amount
-     * @return Trade
+     * @return \Ginero\GineroPhp\Model\Response\Order\CreateTrade
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function createTrade($orderId, $amount)
     {
         $body = $this->serialize((new CreateTrade())->setAmount($amount));
 
-        return $this->post($this->apiBaseUri . "/$orderId/trades", $body, Trade::class);
+        return $this->post($this->apiBaseUri . "/$orderId/trades", $body, \Ginero\GineroPhp\Model\Response\Order\CreateTrade::class);
     }
 }
