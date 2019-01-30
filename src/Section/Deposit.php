@@ -61,11 +61,15 @@ final class Deposit extends Client
 
     /**
      * @param string $cryptoCurrency
+     * @param string|null $notifyUrl
      * @return GetDeposit
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getNewDeposit($cryptoCurrency)
+    public function getNewDeposit($cryptoCurrency, $notifyUrl = null)
     {
-        return $this->get($this->apiBaseUri . "/$cryptoCurrency/new", GetDeposit::class);
+        $url = $this->apiBaseUri . "/$cryptoCurrency/new";
+        $url = is_string($notifyUrl) ? ($url . '?notifyUrl=' . $notifyUrl) : $url;
+
+        return $this->get($url, GetDeposit::class);
     }
 }
