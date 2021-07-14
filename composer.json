@@ -6,7 +6,7 @@
         "php": ">=7.0",
         "ext-bcmath": "*",
         "guzzlehttp/guzzle": "^6.3",
-        "jms/serializer": "^1.13"
+        "jms/serializer": "^1.0|^2.0|^3.0"
     },
     "require-dev": {
         "symfony/var-dumper": "^4.1"
